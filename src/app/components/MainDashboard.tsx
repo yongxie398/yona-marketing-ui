@@ -10,6 +10,7 @@ import { CampaignPerformance } from "./CampaignPerformance";
 import { ABTestingOverview } from "./ABTestingOverview";
 import { Onboarding, OnboardingData } from "./Onboarding";
 import { FirstSaleCelebration } from "./onboarding/FirstSaleCelebration";
+import { RestrictedModeBanner } from "./RestrictedModeBanner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 export type TimeRange = "today" | "7days" | "30days";
@@ -21,12 +22,16 @@ export function MainDashboard() {
   // Onboarding state - set to false to show onboarding, true to show dashboard
   const [onboardingComplete, setOnboardingComplete] = useState(false);
   
+  // Checkout readiness state - tracks if merchant's checkout is properly configured
+  const [checkoutReady, setCheckoutReady] = useState(true);
+  
   // First sale celebration - can be triggered from dashboard
   const [showFirstSale, setShowFirstSale] = useState(false);
 
   const handleOnboardingComplete = (data: OnboardingData) => {
     console.log("Onboarding completed:", data);
     setOnboardingComplete(true);
+    setCheckoutReady(data.checkoutReady);
     // In real app, save to backend
   };
 
@@ -48,6 +53,14 @@ export function MainDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Restricted Mode Banner - Shows when checkout is not properly configured */}
+      {!checkoutReady && (
+        <RestrictedModeBanner 
+          shopDomain="your-store"
+          onDismiss={() => setCheckoutReady(true)}
+        />
+      )}
+
       {/* Demo Controls - Remove in production */}
       <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2">
         <button
@@ -60,7 +73,13 @@ export function MainDashboard() {
           onClick={() => setShowFirstSale(true)}
           className="px-4 py-2 bg-amber-600 text-white text-sm font-medium rounded-lg shadow-lg hover:bg-amber-700 transition-colors"
         >
-          Show First Sale 🎉
+          Show First Sale
+        </button>
+        <button
+          onClick={() => setCheckoutReady(prev => !prev)}
+          className="px-4 py-2 bg-orange-600 text-white text-sm font-medium rounded-lg shadow-lg hover:bg-orange-700 transition-colors"
+        >
+          Toggle Restricted Mode
         </button>
       </div>
 

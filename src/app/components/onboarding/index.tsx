@@ -3,3 +3,4 @@ export { PlanSelection } from "./PlanSelection";
 export { BrandVoice } from "./BrandVoice";
 export { AIActivation } from "./AIActivation";
 export { FirstSaleCelebration } from "./FirstSaleCelebration";
+export { SystemCheck } from "./SystemCheck";

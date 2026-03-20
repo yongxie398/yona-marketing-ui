@@ -98,7 +98,7 @@ export function BrandVoice({ onContinue, onBack }: BrandVoiceProps) {
   return (
     <OnboardingLayout
       currentStep={2}
-      totalSteps={3}
+      totalSteps={4}
       title="Define Your Brand Voice"
       subtitle="Choose how Yona communicates with your customers"
     >

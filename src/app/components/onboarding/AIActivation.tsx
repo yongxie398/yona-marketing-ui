@@ -23,8 +23,8 @@ export function AIActivation({ onActivate, onBack, selectedPlan, selectedVoice }
 
   return (
     <OnboardingLayout
-      currentStep={3}
-      totalSteps={3}
+      currentStep={4}
+      totalSteps={4}
       title="Your AI is Ready! 🎉"
       subtitle="Review your setup and activate your revenue agent"
     >

@@ -55,7 +55,7 @@ export function PlanSelection({ onContinue, onBack }: PlanSelectionProps) {
   return (
     <OnboardingLayout
       currentStep={1}
-      totalSteps={3}
+      totalSteps={4}
       title="Choose Your Plan"
       subtitle="Select the plan that fits your business needs"
     >
