@@ -1,0 +1,245 @@
+PRD for Billing Feature - AI-powered Shopify App (V1)
+1. Objective & Core Principles
+Objective:
+
+The goal of the Billing Feature in V1 is to ensure that merchants pay only when value is delivered, while also maintaining strict cost controls to protect the startup from runaway costs. The billing system will leverage a revenue-share model that aligns directly with the performance of the AI.
+
+Core Principles:
+
+Fixed Templates + AI-Generated Content: Use system-managed fixed templates to reduce AI costs and minimize merchant involvement.
+
+Strict Budgeting for AI: Implement hard cost caps on AI usage to ensure predictable spending.
+
+Simplicity: The billing process must be seamless and transparent, with minimal merchant input or configuration.
+
+2. Billing Model (V1)
+Plan Structure (2 Plans)
+Plan	Price	Target User
+Starter	$0 + 8% revenue share	New installs, testing value, small stores
+Growth	$0 base + 5% revenue share	Growing stores, consistent recovery
+
+Revenue Share:
+
+8% for the Starter Plan.
+
+5% for the Growth Plan.
+
+Free Tier: The first $200 of recovered revenue is free for the Starter Plan each month.
+
+No monthly fee in V1. Merchants only pay for recovered revenue after they see results.
+
+No fixed monthly costs—this keeps the startup’s risk low and encourages adoption.
+
+3. Cost Control Mechanisms
+3.1. Per-Store AI Budget (Non-Negotiable)
+
+Each store is allocated a fixed monthly budget for AI usage:
+
+AI_BUDGET_PER_STORE = $5–$10/month (V1).
+
+This budget covers LLM calls and message generation.
+
+How the Budget Works:
+
+The AI will operate within this budget.
+
+Once the budget is reached, the app will:
+
+Switch to cached templates (non-AI-generated) for the rest of the month.
+
+Pause non-critical AI flows (e.g., post-purchase emails) to avoid extra costs.
+
+This ensures that AI usage does not exceed the startup’s budget.
+
+3.2. Predefined Fixed Templates (System-Managed)
+Fixed Templates for Campaigns:
+
+Fixed system-managed templates will be used for 5 core campaigns:
+
+Browse Abandonment
+
+Cart Abandonment
+
+Checkout Abandonment
+
+Post-Purchase Follow-Up
+
+Repeat Purchase Reminder
+
+Template Characteristics:
+
+Layout and sections (e.g., subject line, body, footer) are fixed and non-editable by the merchant.
+
+Dynamic placeholders for personalization (e.g., {{customer_name}}, {{product_name}}) are filled in automatically by the AI.
+
+AI-generated content will be minimal: subject line, urgency messaging, or product recommendations.
+
+Why No Template Management for V1:
+
+Fixed templates ensure that messaging is consistent, compliant, and safe for the brand.
+
+No manual editing required from merchants, keeping the process autonomous.
+
+Merchant does not manage templates, aligning with the goal to keep the app simple and automated.
+
+3.3. Event Filtering & Message Triggering
+
+Before AI sees any events, apply basic filtering to ensure that only high-value events trigger AI-generated messaging.
+
+Event Filtering:
+
+Example Filters:
+
+User viewed product < 2 times → Ignore.
+
+Cart value < $20 → Ignore.
+
+User already emailed in last 24h → Ignore.
+
+By filtering events before passing them to the AI, we reduce unnecessary AI costs (e.g., sending emails for irrelevant interactions).
+
+3.4. Frequency Caps (Cost Caps)
+
+Implement frequency caps to avoid excessive messaging and control costs.
+
+Channel	Limit
+Email	Max 1 email/24h per customer
+Active Flows	Max 2 active flows at once
+AI-generated messages	Max 20 messages/month per store
+
+Once the cap is reached:
+
+Skip AI message generation.
+
+Use cached templates (static messaging).
+
+These caps are essential to control costs, prevent over-sending, and reduce support and churn.
+
+3.5. Revenue-Aware Throttling
+
+Tie the AI’s usage to actual performance to ensure that high-performing stores get more value without overspending.
+
+If recovered revenue < $50, limit AI usage to 10 messages for the month.
+
+If recovered revenue > $200, increase AI budget automatically.
+
+This ensures that you never overspend on low-performing stores and that successful stores subsidize cost.
+
+4. AI Model Strategy (Cost-Effective)
+4.1. AI Model Stack for V1
+
+To control costs, the AI model stack in V1 will be lightweight and stateless, avoiding expensive and large-scale models.
+
+Use Cases & Models:
+
+Decision Making: Rules-based and heuristics (no LLM).
+
+Copy Refinement: Small, cheap LLM (e.g., GPT-3 or other lightweight models).
+
+Fallback: Static templates for most messages.
+
+What NOT to Do:
+
+Do NOT use GPT-4-class models for basic message generation.
+
+Do NOT run per-event reasoning with LLMs.
+
+LLM models will be:
+
+Stateless
+
+Use short prompts
+
+Cached aggressively
+
+4.2. Cost Efficiency:
+
+For 90% of messages, use predefined templates (not LLM-generated).
+
+Use AI only for small, targeted adjustments (e.g., rewriting a subject line or urgency framing).
+
+5. Cost Math (Example Calculation)
+Example V1 Store Calculation:
+
+500 visitors/month
+
+30 messages sent (10 AI-generated)
+
+Cost per AI message: ~$0.02
+
+Total AI cost for 10 messages:
+
+10 × $0.02 = $0.20
+
+Email sending cost (30 messages × $0.001): $0.03
+
+Total monthly cost per store:
+
+$0.20 (AI) + $0.03 (email) = ~$0.50
+
+For 100 stores: $50/month
+For 500 stores: $250/month
+
+This keeps the cost manageable and predictable.
+
+6. Business-Level Safety Valves
+
+To prevent runaway costs, implement global safety valves:
+
+Pause AI generation platform-wide if costs exceed budget.
+
+Downgrade all stores to templates if necessary.
+
+Disable non-revenue-generating flows (e.g., post-purchase thank-you emails first).
+
+These kill switches ensure the system remains sustainable and can scale without exceeding the available resources.
+
+7. What NOT to Build in V1
+
+Avoid adding unnecessary complexity that would increase costs or the support burden:
+
+❌ Template editor (no merchant customization).
+
+❌ WYSIWYG (What You See Is What You Get) editor for template design.
+
+❌ HTML editing.
+
+❌ Per-campaign customization.
+
+❌ A/B testing UI.
+
+❌ Variable injection UI for merchants.
+
+Each of these increases:
+
+Scope (complexity for both merchants and the product).
+
+Operator workload (merchants would need to manage their own templates).
+
+Support burden (more things to troubleshoot).
+
+Autonomous agent clarity (confusion about whether the AI or the merchant is responsible for email creation).
+
+8. Final PM Takeaway
+
+In V1, we focus on:
+
+Fixed, system-managed templates.
+
+Minimal AI interaction (AI for dynamic content like subject lines).
+
+Strict cost controls to ensure the app stays cost-efficient and sustainable for the startup.
+
+V1 Decision:
+
+No template management.
+
+Use system-managed templates with dynamic AI-generated content.
+
+Brand tone selection is the only customization option available for merchants.
+
+This strategy is designed to ensure:
+
+Fast, scalable growth without overwhelming merchants or the system.
+
+Cost controls to keep operations manageable and predictable.
