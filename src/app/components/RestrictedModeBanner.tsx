@@ -34,7 +34,7 @@ export function RestrictedModeBanner({
                 Your AI Agent is active but limited.
               </span>
               <span className="text-amber-100 text-sm sm:text-base">
-                We detected that your checkout doesn't require emails.
+                We noticed you haven&apos;t confirmed your checkout settings. This may prevent emails from being sent.
               </span>
             </div>
           </div>
@@ -46,8 +46,8 @@ export function RestrictedModeBanner({
               rel="noopener noreferrer"
               className="flex items-center gap-2 bg-white text-amber-700 px-4 py-2 rounded-lg font-semibold text-sm hover:bg-amber-50 transition-colors whitespace-nowrap"
             >
-              <span className="hidden sm:inline">Click here to fix</span>
-              <span className="sm:hidden">Fix</span>
+              <span className="hidden sm:inline">Complete Setup</span>
+              <span className="sm:hidden">Setup</span>
               <ExternalLink className="w-4 h-4" />
             </a>
             <button
