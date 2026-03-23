@@ -1,26 +1,8 @@
 import { Card } from "./ui/card";
-import { Switch } from "./ui/switch";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { Settings, Play, Pause, AlertCircle, Zap } from "lucide-react";
-import { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-} from "./ui/dialog";
-import { Label } from "./ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
+import { Settings, Play, Pause, Zap } from "lucide-react";
+import { Link } from "react-router";
 
 interface AIControlsProps {
   aiStatus: "active" | "paused";
@@ -28,10 +10,6 @@ interface AIControlsProps {
 }
 
 export function AIControls({ aiStatus, setAiStatus }: AIControlsProps) {
-  const [brandVoice, setBrandVoice] = useState("friendly");
-  const [dailyFrequencyCap, setDailyFrequencyCap] = useState("1");
-  const [weeklyFrequencyCap, setWeeklyFrequencyCap] = useState("3");
-
   return (
     <Card className="p-6">
       <div className="flex items-center justify-between mb-6">
@@ -80,85 +58,13 @@ export function AIControls({ aiStatus, setAiStatus }: AIControlsProps) {
           </div>
         </div>
 
-        {/* Settings Dialog */}
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="outline" className="w-full gap-2">
-              <Settings className="w-4 h-4" />
-              Configure Agent
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[500px]">
-            <DialogHeader>
-              <DialogTitle>Agent Configuration</DialogTitle>
-              <DialogDescription>
-                Set guardrails and brand preferences for your AI agent
-              </DialogDescription>
-            </DialogHeader>
-            
-            <div className="space-y-6 py-4">
-              <div className="space-y-2">
-                <Label>Brand Voice</Label>
-                <Select value={brandVoice} onValueChange={setBrandVoice}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="friendly">Friendly</SelectItem>
-                    <SelectItem value="premium">Premium</SelectItem>
-                    <SelectItem value="playful">Playful</SelectItem>
-                    <SelectItem value="minimal">Minimal</SelectItem>
-                  </SelectContent>
-                </Select>
-                <p className="text-xs text-gray-500">AI adapts messaging tone to match your brand</p>
-              </div>
-
-              <div className="pt-4 border-t border-gray-200">
-                <h4 className="text-sm font-semibold text-gray-900 mb-4">Frequency Guardrails</h4>
-                
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label>Max messages per customer / day</Label>
-                    <Select value={dailyFrequencyCap} onValueChange={setDailyFrequencyCap}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="1">1 message</SelectItem>
-                        <SelectItem value="2">2 messages</SelectItem>
-                        <SelectItem value="3">3 messages</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label>Max messages per customer / 7 days</Label>
-                    <Select value={weeklyFrequencyCap} onValueChange={setWeeklyFrequencyCap}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="2">2 messages</SelectItem>
-                        <SelectItem value="3">3 messages</SelectItem>
-                        <SelectItem value="5">5 messages</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                  <p className="text-xs text-blue-900">
-                    💡 AI respects these caps automatically and pauses messaging when limits are reached
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <DialogFooter>
-              <Button>Save Settings</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        {/* Configure Agent - Links to full page */}
+        <Link to="/configure-agent">
+          <Button variant="outline" className="w-full gap-2">
+            <Settings className="w-4 h-4" />
+            Configure Agent
+          </Button>
+        </Link>
 
         {/* Quick Stats */}
         <div className="pt-4 border-t border-gray-200 space-y-3">
