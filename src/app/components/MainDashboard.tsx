@@ -57,10 +57,7 @@ export function MainDashboard() {
     <div className="min-h-screen bg-gray-50">
       {/* Restricted Mode Banner - Shows when checkout is not properly configured */}
       {!checkoutReady && (
-        <RestrictedModeBanner 
-          shopDomain="your-store"
-          onDismiss={() => setCheckoutReady(true)}
-        />
+        <RestrictedModeBanner onDismiss={() => setCheckoutReady(true)} />
       )}
 
       {/* Demo Controls - Remove in production */}

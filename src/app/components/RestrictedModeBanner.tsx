@@ -1,18 +1,15 @@
-import { AlertTriangle, ExternalLink, X } from "lucide-react";
+import { AlertTriangle, ArrowRight, X } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router";
 
 interface RestrictedModeBannerProps {
-  shopDomain?: string;
   onDismiss?: () => void;
 }
 
 export function RestrictedModeBanner({ 
-  shopDomain = "your-store",
   onDismiss 
 }: RestrictedModeBannerProps) {
   const [isDismissed, setIsDismissed] = useState(false);
-  
-  const shopifySettingsUrl = `https://${shopDomain}.myshopify.com/admin/settings/checkout`;
 
   const handleDismiss = () => {
     setIsDismissed(true);
@@ -40,16 +37,14 @@ export function RestrictedModeBanner({
           </div>
           
           <div className="flex items-center gap-3">
-            <a
-              href={shopifySettingsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/configure-agent"
               className="flex items-center gap-2 bg-white text-amber-700 px-4 py-2 rounded-lg font-semibold text-sm hover:bg-amber-50 transition-colors whitespace-nowrap"
             >
               <span className="hidden sm:inline">Complete Setup</span>
               <span className="sm:hidden">Setup</span>
-              <ExternalLink className="w-4 h-4" />
-            </a>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
             <button
               onClick={handleDismiss}
               className="p-1.5 hover:bg-white/20 rounded-lg transition-colors"
